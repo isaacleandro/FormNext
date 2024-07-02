@@ -58,6 +58,15 @@ export default function Home() {
                 <Eye color="#9da3af" size={20} />
               </div>
             </div>
+            <div className="flex gap-5 max-w-full">
+            </div>
+
+            <div className="flex items-center px-4">
+              <span>
+                <input type="checkbox" className="mr-2 h-5 w-5" />
+              </span>
+              <p>By checking this box you are agreeing with our Terms and Conditions and Privacy Policy.</p>
+            </div>
           </div>
         </div>
       </div>
