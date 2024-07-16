@@ -2,8 +2,41 @@
 "use client"
 import Image from "next/image";
 import { Eye } from "@phosphor-icons/react";
+import { useState } from "react";
 
 export default function Home() {
+
+ const [erroMessege, setErrorMessage] = useState("");
+
+ function validateEmail(email) {
+  if (!email.includes("@")) {
+    return false;
+  }
+  if (!email.includes(".com") && !email.includes(".com.br")) {
+    return false;
+  }
+
+  if (emaiil.includes("@.")) {
+    return false
+  }
+
+  if(email[0] === "@" || email[0] === ".") {
+    setErrorMessage("*Email inválido, insira um email válido");
+    ret
+  }
+
+  return true;
+}
+function onChangeEmail(event) {
+  const email = event.target.value;
+
+  if ( validateEmail(email)) {
+    setErrorMessage("");
+  } else {
+    setErrorMessage("*Email inválido, insira um email válido");
+  }
+}
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 max-h-screen">
       <Image src="/assets/woman.jpg"
@@ -35,12 +68,13 @@ export default function Home() {
             </h1>
             <p>Get stardet by creating your account</p>
 
-            <div className="flex min-w-full gap-4">
+            <div className="flex min-w-full gap-4 ">
               <input className="border-none focus:outline-none bg-opacity-30 bg-gray-400 rounded-2xl plceholder-gray-400 p-4 flex-1" placeholder="First Name" />
-
               <input className="border-none focus:outline-none bg-opacity-30 bg-gray-400 rounded-2xl plceholder-gray-400 p-4 flex-1" placeholder="Last Name" />
             </div>
-            <input className="border-none focus:outline-none bg-opacity-30 bg-gray-400 rounded-2xl plceholder-gray-400 p-4 min-w-full" placeholder="Email" />
+
+            <input onBlur={onChangeEmail} className="border-none focus:outline-none bg-opacity-30 bg-gray-400 rounded-2xl plceholder-gray-400 p-4 min-w-full" placeholder="Email" />
+
             <div className="h-16 w-full bg-gray-200 rounded-xl flex items-center px-4 gap-4">
               <Image src="/assets/bandeira.png" alt="arrow" style={{ zIndex: 20 }} width={40} height={40} />
               <p>+ 1</p>
@@ -53,12 +87,15 @@ export default function Home() {
                 <input className="flex-grow bg-transparent focus:outline-none" placeholder="Password " />
                 <Eye color="#9da3af" size={20} />
               </div>
+
               <div className="flex h-16 w-full bg-gray-200 rounded-xl flex items-center px-4">
                 <input className=" flex-grow bg-transparent focus:outline-none" placeholder="Confirm password" />
                 <Eye color="#9da3af" size={20} />
               </div>
             </div>
-            <div className="flex gap-5 max-w-full">
+
+            <div className="text-red-500">
+               {erroMessege}
             </div>
 
             <div className="flex items-center px-4">
