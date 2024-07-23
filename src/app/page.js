@@ -3,39 +3,43 @@
 import Image from "next/image";
 import { Eye } from "@phosphor-icons/react";
 import { useState } from "react";
+import { validateEmail } from "@/utils/validateFunctions";
+import { validatePhoneNumber } from "@/utils/validateFunctions";
+import Button from "@/components/button";
 
+//Scripts...........................................................
 export default function Home() {
 
- const [erroMessege, setErrorMessage] = useState("");
+  const [erroMessege, setErrorMessage] = useState("");
 
- function validateEmail(email) {
-  if (!email.includes("@")) {
-    return false;
-  }
-  if (!email.includes(".com") && !email.includes(".com.br")) {
-    return false;
-  }
+  function onBlurEmail(event) {
+    const email = event.target.value;
 
-  if (emaiil.includes("@.")) {
-    return false
+    if (validateEmail(email)) {
+      setErrorMessage("");
+    } else {
+      setErrorMessage("*Email inválido, insira um email válido");
+    }
   }
 
-  if(email[0] === "@" || email[0] === ".") {
-    setErrorMessage("*Email inválido, insira um email válido");
-    ret
-  }
+  function onBlurPhoneNumber (event) {
+    const phoneNumber = event.target.value;
 
-  return true;
-}
-function onChangeEmail(event) {
-  const email = event.target.value;
+    if (validatePhoneNumber(phoneNumber)) {
 
-  if ( validateEmail(email)) {
+    event.target.value = "`(${phoneNumber.slice(0, 2)}) ${phoneNumber.slice(2, 7)}-${phoneNumber.slice(7, 11)}`";
+    }
     setErrorMessage("");
-  } else {
-    setErrorMessage("*Email inválido, insira um email válido");
+    if (validatePhoneNumber(phoneNumber)) {
+      setErrorMessage("");
+    } else {
+      setErrorMessage("*Número inválido, insira um número válido");
+    }
+    
   }
-}
+
+
+//Html..............................................................
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 max-h-screen">
@@ -73,13 +77,13 @@ function onChangeEmail(event) {
               <input className="border-none focus:outline-none bg-opacity-30 bg-gray-400 rounded-2xl plceholder-gray-400 p-4 flex-1" placeholder="Last Name" />
             </div>
 
-            <input onBlur={onChangeEmail} className="border-none focus:outline-none bg-opacity-30 bg-gray-400 rounded-2xl plceholder-gray-400 p-4 min-w-full" placeholder="Email" />
+            <input onBlur={onBlurEmail} className="border-none focus:outline-none bg-opacity-30 bg-gray-400 rounded-2xl plceholder-gray-400 p-4 min-w-full" placeholder="Email" />
 
             <div className="h-16 w-full bg-gray-200 rounded-xl flex items-center px-4 gap-4">
-              <Image src="/assets/bandeira.png" alt="arrow" style={{ zIndex: 20 }} width={40} height={40} />
-              <p>+ 1</p>
+              <Image src="/assets/bandeira.png" alt="arrow" style={{ zIndex: 20 }} width={45} height={40} />
+              <p>+ 55</p>
               <div className="w-[1.5px] h-[80%] bg-gray-400 rounded " />
-              <input className="flex-grow bg-transparent focus:outline-none" placeholder="Phone Number " />
+              <input onBlur={onBlurPhoneNumber} className="flex-grow bg-transparent focus:outline-none" placeholder="Phone Number " />
             </div>
 
             <div className="flex gap-4">
@@ -95,15 +99,17 @@ function onChangeEmail(event) {
             </div>
 
             <div className="text-red-500">
-               {erroMessege}
+              {erroMessege}
             </div>
 
-            <div className="flex items-center px-4">
-              <span>
-                <input type="checkbox" className="mr-2 h-5 w-5" />
-              </span>
-              <p>By checking this box you are agreeing with our Terms and Conditions and Privacy Policy.</p>
+            <div className="flex-col gap-4 flex items-center ">
+              <span className="flex">
+                <input type="checkbox" className="mr-2 h-6 w-5" />
+                <p>By checking this box you are agreeing with our Terms and Conditions and Privacy Policy.</p>
+              </span>          
+              <Button title="Register" color="indigo"/>
             </div>
+
           </div>
         </div>
       </div>
