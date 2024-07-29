@@ -5,6 +5,7 @@ import { Eye } from "@phosphor-icons/react";
 import { useState } from "react";
 import { validateEmail } from "@/utils/validateFunctions";
 import { validatePhoneNumber } from "@/utils/validateFunctions";
+import { masksPhoneNumber } from "@/utils/masks";
 import Button from "@/components/button";
 
 //Scripts...........................................................
@@ -22,24 +23,23 @@ export default function Home() {
     }
   }
 
-  function onBlurPhoneNumber (event) {
-    const phoneNumber = event.target.value;
+  function onBlurPhoneNumber(event) {
+    let phoneNumber = event.target.value;
+
+    phoneNumber = phoneNumber.replace(/\D/g, "");
 
     if (validatePhoneNumber(phoneNumber)) {
-
-    event.target.value = "`(${phoneNumber.slice(0, 2)}) ${phoneNumber.slice(2, 7)}-${phoneNumber.slice(7, 11)}`";
-    }
-    setErrorMessage("");
-    if (validatePhoneNumber(phoneNumber)) {
+      event.target.value = masksPhoneNumber(phoneNumber);
+    
       setErrorMessage("");
     } else {
       setErrorMessage("*Número inválido, insira um número válido");
     }
-    
+
   }
 
 
-//Html..............................................................
+  //Html..............................................................
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 max-h-screen">
@@ -106,8 +106,8 @@ export default function Home() {
               <span className="flex">
                 <input type="checkbox" className="mr-2 h-6 w-5" />
                 <p>By checking this box you are agreeing with our Terms and Conditions and Privacy Policy.</p>
-              </span>          
-              <Button title="Register" color="indigo"/>
+              </span>
+              <Button title="Register" color="indigo" />
             </div>
 
           </div>

@@ -27,7 +27,8 @@ const EXISTING_DDDs_BR = [
     '85', '88', '83','84', '11', '91', '92', '93', '94', '95', '96','97', '98', '99',
 ]
 
-export function validatePhoneNumber(phoneNumber) {
+ export function validatePhoneNumber(phoneNumber) {
+
     const twoFirstDigits = phoneNumber.slice(0, 2);
 
     const validDDD = EXISTING_DDDs_BR.includes(twoFirstDigits);
