@@ -1,7 +1,7 @@
 
 "use client"
 import Image from "next/image";
-import { Eye } from "@phosphor-icons/react";
+import { Eye, EyeSlash } from "@phosphor-icons/react";
 import { useState } from "react";
 import { validateEmail } from "@/utils/validateFunctions";
 import { validatePhoneNumber } from "@/utils/validateFunctions";
@@ -12,6 +12,11 @@ import Button from "@/components/button";
 export default function Home() {
 
   const [erroMessege, setErrorMessage] = useState("");
+
+  const [seePassword, setSeePassword] = useState(true);
+
+  const [FirstInputPassword, setFirstInputPassword] = useState("");
+  const [SecondInputPassword, setSecondInputPassword] = useState("");
 
   function onBlurEmail(event) {
     const email = event.target.value;
@@ -36,6 +41,10 @@ export default function Home() {
       setErrorMessage("*Número inválido, insira um número válido");
     }
 
+  }
+
+  function toggleSeePassword() {
+    setSeePassword(!seePassword);
   }
 
 
@@ -70,6 +79,7 @@ export default function Home() {
             <h1 className="text-3xl font-bold text-black">
               Let&apos;s create account.
             </h1>
+            
             <p>Get stardet by creating your account</p>
 
             <div className="flex min-w-full gap-4 ">
@@ -87,14 +97,19 @@ export default function Home() {
             </div>
 
             <div className="flex gap-4">
-              <div className="flex h-16 w-full bg-gray-200 rounded-xl flex items-center px-4">
-                <input className="flex-grow bg-transparent focus:outline-none" placeholder="Password " />
-                <Eye color="#9da3af" size={20} />
+              <div className="flex h-16 w-full bg-gray-200 rounded-xl items-center px-4">
+                <input type={seePassword ? "text" : "password"} className="flex-grow bg-transparent focus:outline-none" placeholder="Password " />
+                {seePassword ? <EyeSlash onClick={toggleSeePassword}  color="#9da3af" size={20} /> : <Eye onClick={toggleSeePassword}  color="#9da3af" size={20} />}
               </div>
 
-              <div className="flex h-16 w-full bg-gray-200 rounded-xl flex items-center px-4">
-                <input className=" flex-grow bg-transparent focus:outline-none" placeholder="Confirm password" />
-                <Eye color="#9da3af" size={20} />
+              <div className="flex h-16 w-full bg-gray-200 rounded-xl  items-center px-4">
+                <input 
+                type={seePassword ? "text" : "password"} 
+                className=" flex-grow bg-transparent focus:outline-none" 
+                placeholder="Confirm password" 
+                value={FirstInputPassword}
+                onChange={onBlurPhoneNumber}/>
+                {seePassword ? <EyeSlash onClick={toggleSeePassword} color="#9da3af" size={20} /> : <Eye onClick={toggleSeePassword}  color="#9da3af" size={20} />}
               </div>
             </div>
 
@@ -108,6 +123,7 @@ export default function Home() {
                 <p>By checking this box you are agreeing with our Terms and Conditions and Privacy Policy.</p>
               </span>
               <Button title="Register" color="indigo" />
+              <Button title="Login" color="indigo" />
             </div>
 
           </div>
