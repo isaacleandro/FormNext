@@ -98,7 +98,12 @@ export default function Home() {
 
             <div className="flex gap-4">
               <div className="flex h-16 w-full bg-gray-200 rounded-xl items-center px-4">
-                <input type={seePassword ? "text" : "password"} className="flex-grow bg-transparent focus:outline-none" placeholder="Password " />
+                <input 
+                type={seePassword ? "text" : "password"} 
+                className="flex-grow bg-transparent focus:outline-none" 
+                placeholder="Password "
+                onClick={toggleSeePassword}
+                 />
                 {seePassword ? <EyeSlash onClick={toggleSeePassword}  color="#9da3af" size={20} /> : <Eye onClick={toggleSeePassword}  color="#9da3af" size={20} />}
               </div>
 
@@ -108,7 +113,7 @@ export default function Home() {
                 className=" flex-grow bg-transparent focus:outline-none" 
                 placeholder="Confirm password" 
                 value={FirstInputPassword}
-                onChange={onBlurPhoneNumber}/>
+                onChange={(event) => setFirstInputPassword(event.target.value)}/>
                 {seePassword ? <EyeSlash onClick={toggleSeePassword} color="#9da3af" size={20} /> : <Eye onClick={toggleSeePassword}  color="#9da3af" size={20} />}
               </div>
             </div>
