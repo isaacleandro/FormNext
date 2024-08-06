@@ -1,6 +1,6 @@
 
 
-export default function Button({ title = 'Login', onClick = () => { }, color = '' }) {
+export default function Button({ title = 'Login', onClick = () => { }, color = '', disabled = false }) {
   
     const getColorVariant = {
         'indigo': 'bg-indigo-700',
@@ -11,7 +11,11 @@ export default function Button({ title = 'Login', onClick = () => { }, color = '
     }
    
     return (
-        <button onClick={onClick} className={`${getColorVariant[color]} text-white p-4 rounded-xl w-full`}>
+        <button 
+        onClick={onClick} 
+        className={`${getColorVariant[color]} text-white p-4 rounded-xl w-full`}
+        disable={disabled}
+        >
             {title}
         </button>
     )

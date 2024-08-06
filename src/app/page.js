@@ -13,7 +13,7 @@ export default function Home() {
 
   const [erroMessege, setErrorMessage] = useState("");
 
-  const [seePassword, setSeePassword] = useState(true);
+  const [seePassword, setSeePassword] = useState(false);
 
   const [FirstInputPassword, setFirstInputPassword] = useState("");
   const [SecondInputPassword, setSecondInputPassword] = useState("");
@@ -35,7 +35,7 @@ export default function Home() {
 
     if (validatePhoneNumber(phoneNumber)) {
       event.target.value = masksPhoneNumber(phoneNumber);
-    
+
       setErrorMessage("");
     } else {
       setErrorMessage("*Número inválido, insira um número válido");
@@ -45,6 +45,14 @@ export default function Home() {
 
   function toggleSeePassword() {
     setSeePassword(!seePassword);
+  }
+
+  function onBlurConfirmPassword(event) {
+    if (FirstInputPassword !== SecondInputPassword) {
+      setErrorMessage("*As senhas não coincidem");
+    } else {
+      setErrorMessage("");
+    }
   }
 
 
@@ -74,12 +82,13 @@ export default function Home() {
             Techbia
           </h1>
         </div>
+
         <div className=" flex-1 justify-center items-center px-5">
-          <div className="gap-5 bg-white rounded-3xl min-w-full min-h-full flex justify-center items-start flex-col p-8 text-black">
+          <div className="gap-5 bg-white rounded-3xl min-w-full flex justify-center items-start flex-col p-8 text-black">
             <h1 className="text-3xl font-bold text-black">
               Let&apos;s create account.
             </h1>
-            
+        
             <p>Get stardet by creating your account</p>
 
             <div className="flex min-w-full gap-4 ">
@@ -98,23 +107,46 @@ export default function Home() {
 
             <div className="flex gap-4">
               <div className="flex h-16 w-full bg-gray-200 rounded-xl items-center px-4">
-                <input 
-                type={seePassword ? "text" : "password"} 
-                className="flex-grow bg-transparent focus:outline-none" 
-                placeholder="Password "
-                onClick={toggleSeePassword}
-                 />
-                {seePassword ? <EyeSlash onClick={toggleSeePassword}  color="#9da3af" size={20} /> : <Eye onClick={toggleSeePassword}  color="#9da3af" size={20} />}
+                <input
+                  className=" flex-grow bg-transparent focus:outline-none"
+                  placeholder="Confirm password"
+                  type={seePassword ? "text" : "password"}
+                  value={FirstInputPassword}
+                  onChange={(event) => setFirstInputPassword(event.target.value)}
+                />
+                {seePassword ? (
+                  <EyeSlash
+                    color="#9da3af" size={20}
+
+                    onClick={toggleSeePassword} />
+                ) : (
+                  <Eye
+                    color="#9da3af" size={20}
+
+                    onClick={toggleSeePassword} />
+                )}
               </div>
 
               <div className="flex h-16 w-full bg-gray-200 rounded-xl  items-center px-4">
-                <input 
-                type={seePassword ? "text" : "password"} 
-                className=" flex-grow bg-transparent focus:outline-none" 
-                placeholder="Confirm password" 
-                value={FirstInputPassword}
-                onChange={(event) => setFirstInputPassword(event.target.value)}/>
-                {seePassword ? <EyeSlash onClick={toggleSeePassword} color="#9da3af" size={20} /> : <Eye onClick={toggleSeePassword}  color="#9da3af" size={20} />}
+                <input
+                  className=" flex-grow bg-transparent focus:outline-none"
+                  placeholder="Confirm password"
+                  type={seePassword ? "text" : "password"}
+                  value={SecondInputPassword}
+                  onBlur={onBlurConfirmPassword}
+                  onChange={(event) => setSecondInputPassword(event.target.value)}
+                />
+                {seePassword ? (
+                  <EyeSlash
+                    color="#9da3af"
+                    size={20}
+                    onClick={toggleSeePassword} />
+                ) : (
+                  <Eye
+                    color="#9da3af"
+                    size={20}
+                    onClick={toggleSeePassword} />
+                )}
               </div>
             </div>
 
@@ -127,8 +159,8 @@ export default function Home() {
                 <input type="checkbox" className="mr-2 h-6 w-5" />
                 <p>By checking this box you are agreeing with our Terms and Conditions and Privacy Policy.</p>
               </span>
-              <Button title="Register" color="indigo" />
-              <Button title="Login" color="indigo" />
+              <Button 
+              title="Register" color="indigo" />
             </div>
 
           </div>
@@ -138,3 +170,4 @@ export default function Home() {
     </main>
   );
 }
+
